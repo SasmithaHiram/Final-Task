@@ -9,6 +9,7 @@ import org.example.service.AdminService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -58,6 +59,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Admin> getAll() {
-        return List.of();
+        List<AdminEntity> entities = adminRepository.findAll();
+
+        ArrayList<Admin> admins = new ArrayList<>();
+
+        entities.forEach(adminEntity -> {
+            Admin map = modelMapper.map(adminEntity, Admin.class);
+            admins.add(map);
+        });
+        return admins;
     }
+
 }

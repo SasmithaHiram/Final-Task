@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class AdminController {
         Admin searchById = adminService.searchById(id);
 
         if (searchById!=null) {
-            return ResponseEntity.status(HttpStatus.FOUND).build();
+            return ResponseEntity.ok(searchById);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -47,6 +49,7 @@ public class AdminController {
         }
     }
 
+    @DeleteMapping("/delete")
     public ResponseEntity<String> delete(Long id) {
         boolean isDeleted = adminService.delete(id);
 
@@ -55,6 +58,19 @@ public class AdminController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed To Delete Admin");
         }
+    }
+
+    @GetMapping("/get-all")
+    public ResponseEntity<List<Admin>> getAll() {
+        List<Admin> all = adminService.getAll();
+
+        if (all==null || all.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            return ResponseEntity.ok(all);
+        }
+
+
     }
 
 }
