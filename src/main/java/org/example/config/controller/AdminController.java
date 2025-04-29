@@ -20,8 +20,9 @@ public class AdminController {
 
         if (isCreated) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Admin Created Successfully");
+        } else {
+            return null;
         }
-        return null;
     }
 
     @GetMapping("SearchById/{id}")
@@ -30,8 +31,30 @@ public class AdminController {
 
         if (searchById!=null) {
             return ResponseEntity.status(HttpStatus.FOUND).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> update(@RequestBody Admin admin) {
+        boolean isUpdated = adminService.update(admin);
+
+        if (isUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).body("Admin Updated Successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed To Update Admin");
+        }
+    }
+
+    public ResponseEntity<String> delete(Long id) {
+        boolean isDeleted = adminService.delete(id);
+
+        if (isDeleted) {
+            return ResponseEntity.status(HttpStatus.OK).body("Admin Deleted Successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed To Delete Admin");
+        }
     }
 
 }

@@ -38,12 +38,21 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean update(Long id) {
+    public boolean update(Admin admin) {
+        boolean isUpdated = this.create(admin);
+
+        if (isUpdated) {
+            return isUpdated;
+        }
         return false;
     }
 
     @Override
     public boolean delete(Long id) {
+        if (id!=null) {
+            adminRepository.deleteById(id);
+            return true;
+        }
         return false;
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 public interface AdminService {
     boolean create(Admin admin);
     Admin searchById(Long id);
-    boolean update(Long id);
+    boolean update(Admin admin);
     boolean delete(Long id);
     List<Admin> getAll();
 }
