@@ -28,7 +28,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin searchById(Long id) {
-      return null;
+        Admin found = modelMapper.map(adminRepository.findById(id), Admin.class);
+
+        if (found==null) {
+            return null;
+        } else {
+            return found;
+        }
     }
 
     @Override

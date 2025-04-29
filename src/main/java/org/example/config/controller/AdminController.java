@@ -24,4 +24,14 @@ public class AdminController {
         return null;
     }
 
+    @GetMapping("SearchById/{id}")
+    public ResponseEntity<Admin> searchById(@PathVariable Long id) {
+        Admin searchById = adminService.searchById(id);
+
+        if (searchById!=null) {
+            return ResponseEntity.status(HttpStatus.FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
 }
