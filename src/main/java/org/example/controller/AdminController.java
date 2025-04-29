@@ -1,4 +1,4 @@
-package org.example.config.controller;
+package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.dto.Admin;

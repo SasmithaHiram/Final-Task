@@ -1,4 +1,4 @@
-package org.example.config.controller;
+package org.example.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.dto.Employee;
@@ -23,15 +23,15 @@ public class EmployeeController {
         if (isCreated) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Employee Created Successfully");
         } else {
-            return null;
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Try Again");
         }
     }
 
-    @GetMapping("SearchById/{id}")
+    @GetMapping("searchById/{id}")
     public ResponseEntity<Employee> searchById(@PathVariable Long id) {
         Employee searchById = employeeService.searchById(id);
 
-        if (searchById!=null) {
+        if (searchById != null) {
             return ResponseEntity.ok(searchById);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -49,8 +49,8 @@ public class EmployeeController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> delete(Long id) {
+    @DeleteMapping("/delete{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         boolean isDeleted = employeeService.delete(id);
 
         if (isDeleted) {
@@ -64,12 +64,13 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getAll() {
         List<Employee> all = employeeService.getAll();
 
-        if (all==null || all.isEmpty()) {
+        if (all == null || all.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } else {
             return ResponseEntity.ok(all);
         }
-
     }
 
 }
+
+
